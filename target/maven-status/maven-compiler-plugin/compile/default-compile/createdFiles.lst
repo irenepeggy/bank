@@ -1,0 +1,10 @@
+bank/Schedule.class
+bank/Entity.class
+bank/Account.class
+bank/Operation.class
+bank/ContactPerson.class
+bank/Department.class
+bank/Person.class
+bank/AccountType.class
+bank/Client.class
+bank/BaseEntity.class
