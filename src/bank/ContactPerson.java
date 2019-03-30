@@ -1,8 +1,8 @@
 package bank;
 
-public class ContactPerson {
+public class ContactPerson extends BaseEntity{
 	private String name;
-	private String telephone;
+	private String number;
 	private String email;
 	private EntityClient entityClient;
 	
@@ -14,12 +14,12 @@ public class ContactPerson {
 		return this.name;
 	}
 	
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setNumber(String telephone) {
+		this.number = telephone;
 	}
 	
-	public String getTelephone() {
-		return this.telephone;
+	public String getNumber() {
+		return this.number;
 	}
 	
 	public void setEmail(String email) {

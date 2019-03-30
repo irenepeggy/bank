@@ -39,7 +39,7 @@ public class Account extends BaseEntity{
 	    this.client = client;
 	}
 
-	public Client getCient() {
+	public Client getClient() {
 	    return this.client;
 	}
 	public void setAccountType(AccountType accountType) {
@@ -107,15 +107,15 @@ public class Account extends BaseEntity{
 	    return this.closeDate;
 	}
 	
-	public Set<Operation> getOperation() {
+	public Set<Operation> getOperations() {
 		if (this.operations == null) {
 			this.operations = new HashSet<Operation>();
 		}
 		return this.operations;
 	}
 
-
-	public void addOperation(Operation operation) {
-		getOperation().add(operation);
+	public void setOperations(Set<Operation> operations) {
+		this.operations.addAll(operations);
 	}
+
 }

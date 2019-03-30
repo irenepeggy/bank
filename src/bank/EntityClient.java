@@ -27,7 +27,7 @@ public class EntityClient extends BaseEntity{
 		return this.kind;
 	}
 	
-	public void setMAnager(String manager) {
+	public void setManager(String manager) {
 		this.manager = manager;
 	}
 	
@@ -51,7 +51,7 @@ public class EntityClient extends BaseEntity{
 	}
 
 
-	public void addContactPersons(ContactPerson contactPerson) {
-		getContactPersons().add(contactPerson);
+	public void setContactPersons(Set<ContactPerson> contactPersons) {
+		this.contactPersons.addAll(contactPersons);
 	}
 }

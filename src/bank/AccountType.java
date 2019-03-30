@@ -1,6 +1,6 @@
 package bank;
 
-public class AccountType {
+public class AccountType extends BaseEntity{
 	
 	private String name;
 	private Integer maxCredit;

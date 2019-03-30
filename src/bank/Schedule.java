@@ -1,8 +1,8 @@
 package bank;
 
+
 public class Schedule extends BaseEntity{
 	
-	private Department department;
 	private String mon;
 	private String tue;
 	private String wed;
@@ -11,13 +11,7 @@ public class Schedule extends BaseEntity{
 	private String sat;
 	private String sun;
 
-	public void setIdDepartment(Department department) {
-	    this.department = department;
-	}
 
-	public Department getDepartment() {
-	    return this.department;
-	}
 	public void setMon(String mon) {
 	    this.mon = mon;
 	}

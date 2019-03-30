@@ -4,18 +4,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Department extends BaseEntity{
-	private Integer name;
+	private String name;
 	private String address;
 	private String contacts;
 	private Set<Account> accounts;
-	private Set<Schedule> schedules;
+	private Schedule schedule;
 
 	
-	public void setName(Integer name) {
+	public void setName(String name) {
 	    this.name = name;
 	}
 
-	public Integer getName() {
+	public String getName() {
 	    return this.name;
 	}
 	public void setAddress(String address) {
@@ -46,16 +46,13 @@ public class Department extends BaseEntity{
 	}
 	
 	
-	public Set<Schedule> getSchedule() {
-		if (this.schedules == null) {
-			this.schedules = new HashSet<Schedule>();
-		}
-		return this.schedules;
+	public Schedule getSchedule() {
+		return this.schedule;
 	}
 
 	
-	public Set<Schedule> getSchedules() {
-		return this.schedules;
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 }

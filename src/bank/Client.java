@@ -24,7 +24,9 @@ public class Client extends BaseEntity {
 		return this.accounts;
 	}
 
-
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts.addAll(accounts);
+	}
 	public void addAccount(Account Account) {
 		getAccounts().add(Account);
 	}
