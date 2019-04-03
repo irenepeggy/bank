@@ -1,12 +1,11 @@
 package ngtests;
 
 import java.sql.SQLException;
-import java.util.Collection;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import bank.Account;
 import bank.Client;
 import bank.EntityClient;
 import bank.PersonClient;
@@ -33,19 +32,28 @@ public class ClientTest {
 
 	@Test
 	public void testDelete() throws SQLException {
-		Client c = cliDAO.getClientById(4);
-		
-		Collection<Account> a = c.getAccounts();
-		PersonClient p = pcDAO.getPersonClientByClient(c);
-		EntityClient e = ecDAO.getEntityClientByClient(c);
-		
-		cliDAO.deleteClient(c);
-		
-		assert(cliDAO.getClientById(4) == null);
-		assert((p != null && pcDAO.getPersonClientById(p.getId()) == null) 
-				|| (e != null && ecDAO.getEntityClientById(e.getId()) == null));
-		for (Account acc: a) {
-			assert(accDAO.getAccountById(acc.getId()) == null);
+		Client c = cliDAO.getClientById(1);
+		for (PersonClient pc: c.getPersonClient()) {
+			System.out.println(pc.getId());
+		}
+		if (c == null)
+			return;
+		if (c.getType().equals("entity")) {
+			EntityClient ec = ecDAO.getEntityClientByClient(c);
+			Integer ecId = ec.getId();
+			System.out.println(ecId);
+			cliDAO.deleteClient(c);
+			System.out.println(ecId);
+			Assert.assertNull(ecDAO.getEntityClientById(ecId));
+		} else {
+			PersonClient pc = pcDAO.getPersonClientByClient(c);
+			Integer pcId = pc.getId();
+			System.out.println(pcDAO.getPersonClientByClient(c).getId());
+
+			cliDAO.deleteClient(c);
+			System.out.println(pcId);
+
+			Assert.assertNull(pcDAO.getPersonClientById(pcId));
 		}
 		
 	}

@@ -49,11 +49,9 @@ public class ClientImpl implements ClientDAO {
 		Transaction tx = null;
 		Client client = null;
 		try {
-			System.out.println("getById_begin");
 			tx = session.beginTransaction();
 			client = session.get(Client.class, id);
 			tx.commit();
-			System.out.println("getById_end");
 		} catch (Exception exception) {
 			if (tx != null)
 				tx.rollback();

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -33,18 +34,18 @@ public class EntityClientTest {
 		accTypeDAO = Factory.getInstance().getAccountTypeDAO();
 		accDAO = Factory.getInstance().getAccountDAO();
 	}
-//
-//	@Test
-//	public void testEdit() throws SQLException {
-//		EntityClient ec = ecDAO.getEntityClientById(1);
-//		assert (!ec.getName().equals("Huawei"));
-//		ec.setName("Huawei");
-//
-//		ecDAO.editEntityClient(ec);
-//		EntityClient editedPc = ecDAO.getEntityClientById(1);
-//		assert (editedPc.getName().equals("Huawei"));
-//
-//	}
+
+	@Test
+	public void testEdit() throws SQLException {
+		EntityClient ec = ecDAO.getEntityClientById(1);
+		Assert.assertNotEquals(ec.getName(), "Huawei");
+		ec.setName("Huawei");
+
+		ecDAO.editEntityClient(ec);
+		EntityClient editedPc = ecDAO.getEntityClientById(1);
+		Assert.assertEquals (editedPc.getName(), "Huawei");
+
+	}
 	@Test
 	public void testFilter() throws SQLException, ParseException {
 		String pattern = "yyyy-mm-dd HH:mm:ss.S";
@@ -58,19 +59,19 @@ public class EntityClientTest {
 		accountTypes.add(accTypeDAO.getAccountTypeById(2));
 		
 		Collection<EntityClient> ps = ecDAO.getEntitiesByFilter(openDate1, closeDate, accountTypes);
-		assert(!ps.isEmpty());
+		Assert.assertFalse(ps.isEmpty());
 		for (EntityClient p: ps) {
 			for (Account a: p.getClient().getAccounts()) {
-				assert(a.getOpenDate().compareTo(openDate1) >= 0);
+				Assert.assertTrue(a.getOpenDate().compareTo(openDate1) >= 0);
 				System.out.println(a.getAccountType().getId());
 				boolean contains = false;
 				for (AccountType t: accountTypes) {
 					contains |= t.getId() == a.getAccountType().getId();
 				}
-				assert(contains);
+				Assert.assertTrue(contains);
 			}
 		}
-		assert(ecDAO.getEntitiesByFilter(openDate2, closeDate, accountTypes).isEmpty());
+		Assert.assertTrue(ecDAO.getEntitiesByFilter(openDate2, closeDate, accountTypes).isEmpty());
 		
 	}
 }

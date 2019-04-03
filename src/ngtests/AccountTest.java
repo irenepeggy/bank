@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -15,15 +16,12 @@ import implement.Factory;
 
 public class AccountTest {
 	
-//	public OperationDAO opDAO;
 	public AccountDAO accDAO;
-//	public DepartmentDAO depDAO;
+
 	
 	@BeforeTest
 	public void beforeTest() {
 		accDAO = Factory.getInstance().getAccountDAO();
-//		opDAO = Factory.getInstance().getOperationDAO();
-//		depDAO = Factory.getInstance().getDepartmentDAO();
 	}
 
 	@Test
@@ -40,12 +38,12 @@ public class AccountTest {
 				0.0);
 		for (Account a: accs) {
 			for (Operation o: a.getOperations()) {
-				assert(o.getTime().compareTo(sdf.parse("2019-03-03 00:51:08.0")) >= 0 &&
+				Assert.assertTrue(o.getTime().compareTo(sdf.parse("2019-03-03 00:51:08.0")) >= 0 &&
 						o.getTime().compareTo(sdf.parse("2019-04-03 00:51:08.0")) <= 0);
 				if (o.getSum() > 0) {
-					assert(o.getSum() <= 100000.0 && o.getSum() >= 0);
+					Assert.assertTrue(o.getSum() <= 100000.0 && o.getSum() >= 0);
 				} else {
-					assert(-o.getSum() <= 111.0 && -o.getSum() >= 0);
+					Assert.assertTrue(-o.getSum() <= 111.0 && -o.getSum() >= 0);
 
 				}
 				

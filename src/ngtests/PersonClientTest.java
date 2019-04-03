@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -44,13 +45,17 @@ public class PersonClientTest {
 	@Test
 	public void testEdit() throws SQLException{
 		PersonClient pc = pcDAO.getPersonClientById(1);
-		assert(!pc.getName().equals("Victor") && !pc.getSurname().equals("Kulyamin"));
+		
+		Assert.assertNotEquals(pc.getName(),"Victor"); 
+		Assert.assertNotEquals(pc.getSurname(), "Kulyamin");
+		
 		pc.setName("Victor");
 		pc.setSurname("Kulyamin");
 		
 		pcDAO.editPersonClient(pc);
 		PersonClient editedPc = pcDAO.getPersonClientById(1);
-		assert(editedPc.getName().equals("Victor") && editedPc.getSurname().equals("Kulyamin"));
+		Assert.assertEquals(editedPc.getName(),"Victor"); 
+		Assert.assertEquals(editedPc.getSurname(), "Kulyamin");
 		
 	}
 	
@@ -67,19 +72,19 @@ public class PersonClientTest {
 		accountTypes.add(accTypeDAO.getAccountTypeById(2));
 		
 		Collection<PersonClient> ps = pcDAO.getPersonsByFilter(openDate1, closeDate, accountTypes);
-		assert(!ps.isEmpty());
+		Assert.assertTrue(!ps.isEmpty());
 		for (PersonClient p: ps) {
 			for (Account a: p.getClient().getAccounts()) {
-				assert(a.getOpenDate().compareTo(openDate1) >= 0);
+				Assert.assertTrue(a.getOpenDate().compareTo(openDate1) >= 0);
 				System.out.println(a.getAccountType().getId());
 				boolean contains = false;
 				for (AccountType t: accountTypes) {
 					contains |= t.getId() == a.getAccountType().getId();
 				}
-				assert(contains);
+				Assert.assertTrue(contains);
 			}
 		}
-		assert(pcDAO.getPersonsByFilter(openDate2, closeDate, accountTypes).isEmpty());
+		Assert.assertTrue(pcDAO.getPersonsByFilter(openDate2, closeDate, accountTypes).isEmpty());
 		
 	}
 

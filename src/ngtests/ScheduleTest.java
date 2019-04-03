@@ -2,6 +2,7 @@ package ngtests;
 
 import java.sql.SQLException;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -20,11 +21,6 @@ public class ScheduleTest {
 		depDAO = Factory.getInstance().getDepartmentDAO();
 	}
 
-	@Test
-	public void testById() throws SQLException {
-		Schedule sched = schDAO.getScheduleById(1);
-		assert (sched.getId() == 1);
-	}
 
 	@Test
 	public void testCreate() throws SQLException {
@@ -35,7 +31,7 @@ public class ScheduleTest {
 		schDAO.createSchedule(newSched);
 		Schedule added = schDAO.getScheduleById(newSched.getId());
 
-		assert (newSched.getFri().equals(added.getFri()));
+		Assert.assertEquals(newSched.getFri(), added.getFri());
 
 		schDAO.deleteSchedule(newSched);
 	}
@@ -51,7 +47,7 @@ public class ScheduleTest {
 
 		schDAO.editSchedule(sched);
 
-		assert (schDAO.getScheduleById(sched.getId()).getFri().equals("10:00 - 19:00"));
+		Assert.assertEquals (schDAO.getScheduleById(sched.getId()).getFri(), "10:00 - 19:00");
 
 		schDAO.deleteSchedule(sched);
 	}
@@ -63,7 +59,7 @@ public class ScheduleTest {
 		schDAO.createSchedule(sched);
 		Integer id = sched.getId();
 		schDAO.deleteSchedule(sched);
-		assert(schDAO.getScheduleById(id) == null);
+		Assert.assertNull(schDAO.getScheduleById(id));
 
 	}
 

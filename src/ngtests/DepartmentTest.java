@@ -2,7 +2,7 @@ package ngtests;
 
 import java.sql.SQLException;
 
-import org.hibernate.ObjectNotFoundException;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -29,12 +29,7 @@ public class DepartmentTest {
 		assert (dep.getId() == 1);
 	}
 	
-//	
-//	@Test
-//	public void testGetAll() throws SQLException {
-//		Collection<Department> deps = depDAO.getAllDepartments();
-//		
-//	}
+
 
 	@Test
 	public void testCreate() throws SQLException {
@@ -50,7 +45,7 @@ public class DepartmentTest {
 		depDAO.addDepartment(newDep);
 		Department added = depDAO.getDepartmentById(newDep.getId());
 
-		assert (added.getName().equals("Main Rostov Office"));
+		Assert.assertEquals (added.getName(), "Main Rostov Office");
 
 		depDAO.deleteDepartment(newDep);
 	}
@@ -68,12 +63,12 @@ public class DepartmentTest {
 
 		depDAO.editDepartment(dep);
 
-		assert (depDAO.getDepartmentById(dep.getId()).getName().equals("Main Moscow Office"));
+		Assert.assertEquals (depDAO.getDepartmentById(dep.getId()).getName(), "Main Moscow Office");
 
 		depDAO.deleteDepartment(dep);
 	}
 
-	@Test(expectedExceptions = { ObjectNotFoundException.class })
+	@Test
 	public void testDelete() throws SQLException {
 
 		Department dep = new Department();
@@ -84,7 +79,7 @@ public class DepartmentTest {
 		depDAO.addDepartment(dep);
 		Integer id = dep.getId();
 		depDAO.deleteDepartment(dep);
-		depDAO.getDepartmentById(id);
+		Assert.assertNull(depDAO.getDepartmentById(id));
 
 	}
 

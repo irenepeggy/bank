@@ -77,7 +77,7 @@ public class DepartmentImpl implements DepartmentDAO {
 		Department department = null;
 		try {
 			tx = session.beginTransaction();
-			department = (Department) session.load(Department.class, id);
+			department = (Department) session.get(Department.class, id);
 			tx.commit();
 		} catch (HibernateException exception) {
 			if (tx != null)
