@@ -52,6 +52,9 @@ public class EntityClient extends BaseEntity{
 
 
 	public void setContactPersons(Set<ContactPerson> contactPersons) {
+		if (this.contactPersons == null) {
+			this.contactPersons = new HashSet<ContactPerson>();
+		}
 		this.contactPersons.addAll(contactPersons);
 	}
 }

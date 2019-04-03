@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="bank">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../usr/local/eclipse/"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="Maven Dependencies.libraryclasspath">
+        <pathelement location="../../.m2/repository/org/hibernate/hibernate-core/5.4.2.Final/hibernate-core-5.4.2.Final.jar"/>
+        <pathelement location="../../.m2/repository/org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar"/>
+        <pathelement location="../../.m2/repository/javax/persistence/javax.persistence-api/2.2/javax.persistence-api-2.2.jar"/>
+        <pathelement location="../../.m2/repository/org/javassist/javassist/3.24.0-GA/javassist-3.24.0-GA.jar"/>
+        <pathelement location="../../.m2/repository/net/bytebuddy/byte-buddy/1.9.10/byte-buddy-1.9.10.jar"/>
+        <pathelement location="../../.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+        <pathelement location="../../.m2/repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.1.1.Final/jboss-transaction-api_1.2_spec-1.1.1.Final.jar"/>
+        <pathelement location="../../.m2/repository/org/jboss/jandex/2.0.5.Final/jandex-2.0.5.Final.jar"/>
+        <pathelement location="../../.m2/repository/com/fasterxml/classmate/1.3.4/classmate-1.3.4.jar"/>
+        <pathelement location="../../.m2/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar"/>
+        <pathelement location="../../.m2/repository/org/dom4j/dom4j/2.1.1/dom4j-2.1.1.jar"/>
+        <pathelement location="../../.m2/repository/org/hibernate/common/hibernate-commons-annotations/5.1.0.Final/hibernate-commons-annotations-5.1.0.Final.jar"/>
+        <pathelement location="../../.m2/repository/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar"/>
+        <pathelement location="../../.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.1/jaxb-runtime-2.3.1.jar"/>
+        <pathelement location="../../.m2/repository/org/glassfish/jaxb/txw2/2.3.1/txw2-2.3.1.jar"/>
+        <pathelement location="../../.m2/repository/com/sun/istack/istack-commons-runtime/3.0.7/istack-commons-runtime-3.0.7.jar"/>
+        <pathelement location="../../.m2/repository/org/jvnet/staxex/stax-ex/1.8/stax-ex-1.8.jar"/>
+        <pathelement location="../../.m2/repository/com/sun/xml/fastinfoset/FastInfoset/1.2.15/FastInfoset-1.2.15.jar"/>
+        <pathelement location="../../.m2/repository/javax/transaction/jta/1.1/jta-1.1.jar"/>
+        <pathelement location="../../.m2/repository/org/hibernate/hibernate-commons-annotations/3.0.0.ga/hibernate-commons-annotations-3.0.0.ga.jar"/>
+        <pathelement location="../../.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+        <pathelement location="../../.m2/repository/org/hibernate/hibernate-annotations/3.3.0.ga/hibernate-annotations-3.3.0.ga.jar"/>
+        <pathelement location="../../.m2/repository/org/hibernate/hibernate/3.2.4.sp1/hibernate-3.2.4.sp1.jar"/>
+        <pathelement location="../../.m2/repository/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar"/>
+        <pathelement location="../../.m2/repository/asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar"/>
+        <pathelement location="../../.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+        <pathelement location="../../.m2/repository/cglib/cglib/2.1_3/cglib-2.1_3.jar"/>
+        <pathelement location="../../.m2/repository/asm/asm/1.5.3/asm-1.5.3.jar"/>
+        <pathelement location="../../.m2/repository/commons-collections/commons-collections/2.1.1/commons-collections-2.1.1.jar"/>
+        <pathelement location="../../.m2/repository/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar"/>
+        <pathelement location="../../.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar"/>
+        <pathelement location="../../.m2/repository/org/springframework/spring-core/4.1.4.RELEASE/spring-core-4.1.4.RELEASE.jar"/>
+        <pathelement location="../../.m2/repository/org/springframework/spring-context/4.1.6.RELEASE/spring-context-4.1.6.RELEASE.jar"/>
+        <pathelement location="../../.m2/repository/org/springframework/spring-aop/4.1.6.RELEASE/spring-aop-4.1.6.RELEASE.jar"/>
+        <pathelement location="../../.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
+        <pathelement location="../../.m2/repository/org/springframework/spring-beans/4.1.6.RELEASE/spring-beans-4.1.6.RELEASE.jar"/>
+        <pathelement location="../../.m2/repository/org/springframework/spring-expression/4.1.6.RELEASE/spring-expression-4.1.6.RELEASE.jar"/>
+        <pathelement location="../../.m2/repository/org/slf4j/slf4j-log4j12/1.6.1/slf4j-log4j12-1.6.1.jar"/>
+        <pathelement location="../../.m2/repository/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar"/>
+        <pathelement location="../../.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+        <pathelement location="../../.m2/repository/org/testng/testng/6.8/testng-6.8.jar"/>
+        <pathelement location="../../.m2/repository/junit/junit/4.10/junit-4.10.jar"/>
+        <pathelement location="../../.m2/repository/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
+        <pathelement location="../../.m2/repository/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar"/>
+        <pathelement location="../../.m2/repository/com/beust/jcommander/1.27/jcommander-1.27.jar"/>
+        <pathelement location="../../.m2/repository/org/yaml/snakeyaml/1.6/snakeyaml-1.6.jar"/>
+    </path>
+    <path id="TestNG.libraryclasspath">
+        <pathelement location="../../.eclipse/org.eclipse.platform_4.10.0_185596441_linux_gtk_x86_64/plugins/org.testng_6.14.3.r201802240500.jar"/>
+        <pathelement location="../../.eclipse/org.eclipse.platform_4.10.0_185596441_linux_gtk_x86_64/plugins/com.beust.jcommander_1.72.0.jar"/>
+        <pathelement location="../../.eclipse/org.eclipse.platform_4.10.0_185596441_linux_gtk_x86_64/plugins/org.apache-extras.beanshell.bsh_2.0.0.b6.jar"/>
+        <pathelement location="../../.eclipse/org.eclipse.platform_4.10.0_185596441_linux_gtk_x86_64/plugins/org.yaml.snakeyaml_1.17.0.jar"/>
+    </path>
+    <path id="bank.classpath">
+        <pathelement location="target/classes"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+        <path refid="TestNG.libraryclasspath"/>
+    </path>
+    <path id="run.Base.classpath">
+        <path refid="bank.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="target/classes"/>
+        <copy includeemptydirs="false" todir="target/classes">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="target/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="bank.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="Base">
+        <java classname="test.Base" failonerror="true" fork="yes">
+            <classpath refid="run.Base.classpath"/>
+        </java>
+    </target>
+</project>

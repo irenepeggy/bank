@@ -1,11 +1,11 @@
 package bank;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Operation extends BaseEntity{
 	private Account account;
-	private Integer sum;
-	private Timestamp time;
+	private Double sum;
+	private Date time;
 	private Department department;
 	
 	public void setAccount(Account account) {
@@ -15,18 +15,18 @@ public class Operation extends BaseEntity{
 	public Account getAccount() {
 	    return this.account;
 	}
-	public void setSum(Integer sum) {
+	public void setSum(Double sum) {
 	    this.sum = sum;
 	}
 
-	public Integer getSum() {
+	public Double getSum() {
 	    return this.sum;
 	}
-	public void setTime(Timestamp time) {
+	public void setTime(Date time) {
 	    this.time = time;
 	}
 
-	public Timestamp getTime() {
+	public Date getTime() {
 	    return this.time;
 	}
 	public void setDepartment(Department department) {

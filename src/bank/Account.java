@@ -11,10 +11,10 @@ public class Account extends BaseEntity{
 	private Client client;
 	private AccountType accountType;
 	private String status;
-	private Integer debit;
-	private Integer credit;
-	private Integer deposit;
-	private Integer balance;
+	private Double debit;
+	private Double credit;
+	private Double deposit;
+	private Double balance;
 	private Integer period;
 	private Date openDate;
 	private Date closeDate;
@@ -57,32 +57,32 @@ public class Account extends BaseEntity{
 	public String getStatus() {
 	    return this.status;
 	}
-	public void setDebit(Integer debit) {
+	public void setDebit(Double debit) {
 	    this.debit = debit;
 	}
 
-	public Integer getDebit() {
+	public Double getDebit() {
 		return this.debit == null? 0 : this.debit;
 	}
-	public void setCredit(Integer credit) {
+	public void setCredit(Double credit) {
 	    this.credit = credit;
 	}
 
-	public Integer getCredit() {
+	public Double getCredit() {
 	    return this.credit == null? 0 : this.credit;
 	}
-	public void setDeposit(Integer deposit) {
+	public void setDeposit(Double deposit) {
 	    this.deposit = deposit;
 	}
 
-	public Integer getDeposit() {
+	public Double getDeposit() {
 	    return this.deposit == null? 0: this.deposit;
 	}
-	public void setBalance(Integer balance) {
+	public void setBalance(Double balance) {
 	    this.balance = balance;
 	}
 
-	public Integer getBalance() {
+	public Double getBalance() {
 	    return this.balance == null? 0 : this.balance;
 	}
 	public void setPeriod(Integer period) {
@@ -115,6 +115,9 @@ public class Account extends BaseEntity{
 	}
 
 	public void setOperations(Set<Operation> operations) {
+		if (this.operations == null) {
+			this.operations = new HashSet<Operation>();
+		}
 		this.operations.addAll(operations);
 	}
 

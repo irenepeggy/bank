@@ -41,8 +41,11 @@ public class Department extends BaseEntity{
 	}
 
 
-	public void addAccount(Account account) {
-		getAccounts().add(account);
+	public void setAccounts(Set<Account> accounts) {
+		if (this.accounts == null) {
+			this.accounts = new HashSet<Account>();
+		}
+		this.accounts.addAll(accounts);
 	}
 	
 	

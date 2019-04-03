@@ -1,6 +1,5 @@
 package dao;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -12,9 +11,9 @@ public interface DepartmentDAO {
 
 	 public void editDepartment(Department department) throws SQLException;
 
-	 public void deleteDepartment(Integer department) throws SQLException, IOException;
+	 public void deleteDepartment(Department department) throws SQLException;
 
-	 public Collection<Department> getDepartmentById(Integer id) throws SQLException;
+	 public Department getDepartmentById(Integer id) throws SQLException;
 
 	 public Collection<Department> getAllDepartments() throws SQLException;
 

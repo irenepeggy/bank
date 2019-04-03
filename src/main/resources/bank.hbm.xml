@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+
+<hibernate-mapping auto-import="true" default-lazy="false">
+
+	
+	<class name="bank.PersonClient" table="PersonClient">
+		<id name="id" column="idPersonClient"> 
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name"></property>
+		<property name="surname" column="surname"/>
+		<property name="telephone" column="telephone"/>
+		<property name="email" column="email"/>
+		<property name="passport" column="passport"/>
+		<many-to-one name="client" column="idClient" class="bank.Client"/>
+	</class>
+	<class name="bank.EntityClient" table="EntityClient">
+		<id name="id" column="idEntityClient"> 
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name"/>
+		<property name="kind" column="kind"/>
+		<property name="manager" column="manager"/>
+		<many-to-one name="client" column="idClient" class="bank.Client"/>
+		<set name="contactPersons" inverse="true" cascade="delete">
+			<key column="idEntityPerson"/>
+			<one-to-many class="bank.ContactPerson"/>
+		</set>
+	</class>
+	<class name="bank.Client" table="Client">
+		<id name="id" column="idClient"> 
+			<generator class="native"/>
+		</id>
+		<property name="type" column="typeClient"/>
+		<set name="accounts" inverse="true" cascade="delete">
+			<key column="idClient"/>
+			<one-to-many class="bank.Account"/>
+		</set>
+		<set name="entityClient" inverse="true" cascade="delete">
+			<key column="idClient"/>
+			<one-to-many class="bank.EntityClient"/>
+		</set>
+		<set name="personClient" inverse="true" cascade="delete">
+			<key column="idClient"/>
+			<one-to-many class="bank.PersonClient"/>
+		</set>
+	</class>
+
+
+	<class name="bank.ContactPerson" table="ContactPerson">
+		<id name="id" column="idContactPerson"> 
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name"/>
+		<property name="number" column="number"/>
+		<property name="email" column="email"/>
+		<many-to-one name="entityClient" column="idEntityClient" class="bank.ContactPerson"/>
+	</class>	
+
+	<class name="bank.Account" table="Account">
+		<id name="id" column="idAccount"> 
+			<generator class="native"/>
+		</id>
+		<property name="accountNum" column="accountNum"/>
+		<property name="status" column="status"/>
+		<property name="debit" column="debit"/>
+		<property name="credit" column="credit"/>
+		<property name="deposit" column="deposit"/>
+		<property name="balance" column="balance"/>
+		<property name="period" column="period"/>
+		<property name="openDate" column="openDate"/>
+		<property name="closeDate" column="closeDate"/>
+		<many-to-one name="client" column="idClient" class="bank.Client"/>
+		<many-to-one name="accountType" column="idType" class="bank.AccountType"/>
+		<many-to-one name="department" column="idDepartment" class="bank.Department"/>
+		<set name="operations" inverse="true" cascade="delete">
+			<key column="idAccount"/>
+			<one-to-many class="bank.Operation"/>
+		</set>
+	</class>
+	
+	<class name="bank.AccountType" table="AccountType">
+		<id name="id" column="idAccountType"> 
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name"/>
+		<property name="maxCredit" column="maxCredit"/>
+		<property name="interestOnLoan" column="interestOnLoan"/>
+		<property name="minPeriod" column="minPeriod"/>
+		<property name="maxPeriod" column="maxPeriod"/>
+		<property name="interestOnDeposit" column="interestOnDeposit"/>
+		<property name="minDepositSum" column="minDepositSum"/>
+		<property name="maxAssessment" column="maxAssessment"/>
+		<property name="maxCancellation" column="maxCancellation"/>
+		<set name="accounts" inverse="true" cascade="delete">
+			<key column="idType"/>
+			<one-to-many class="bank.Account"/>
+		</set>
+	</class>
+	
+	<class name="bank.Operation" table="Operation">
+		<id name="id" column="idOperation"> 
+			<generator class="native"/>
+		</id>
+		<property name="sum" column="sum"/>
+		<property name="time" column="time"/>
+		<many-to-one name="department" column="idDepartment" class="bank.Department"/>
+		<many-to-one name="account" column="idAccount" class="bank.Account"/>
+	</class>
+	
+	<class name="bank.Department" table="Department">
+		<id name="id" column="idDepartment"> 
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name"/>
+		<property name="address" column="address"/>
+		<property name="contacts" column="contacts"/>
+		<many-to-one name="schedule" column="idSchedule" class="bank.Schedule"/>
+	</class>
+
+	<class name="bank.Schedule" table="Schedule">
+		<id name="id" column="idSchedule"> 
+			<generator class="native"/>
+		</id>
+		<property name="mon" column="mon"/>
+		<property name="tue" column="tue"/>
+		<property name="wed" column="wed"/>
+		<property name="thu" column="thu"/>
+		<property name="fri" column="fri"/>
+		<property name="sat" column="sat"/>
+		<property name="sun" column="sun"/>
+<!-- 		<set name="departments" inverse="true" cascade="delete"> -->
+<!-- 			<key column="idSchedule"/> -->
+<!-- 			<one-to-many class="bank.Department"/> -->
+<!-- 		</set> -->
+	</class>
+</hibernate-mapping>

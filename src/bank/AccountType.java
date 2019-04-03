@@ -1,16 +1,20 @@
 package bank;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class AccountType extends BaseEntity{
 	
 	private String name;
-	private Integer maxCredit;
+	private Double maxCredit;
 	private Double interestOnLoan;
 	private Integer minPeriod;
 	private Integer maxPeriod;
 	private Double interestOnDeposit;
-	private Integer minDepositSum;
-	private Integer maxAssessment;
-	private Integer maxCancellation;
+	private Double minDepositSum;
+	private Double maxAssessment;
+	private Double maxCancellation;
+	private Set<Account> accounts;
 	
 
 	public void setName(String name) {
@@ -20,11 +24,11 @@ public class AccountType extends BaseEntity{
 	public String getName() {
 	    return this.name;
 	}
-	public void setMaxCredit(Integer maxCredit) {
+	public void setMaxCredit(Double maxCredit) {
 	    this.maxCredit = maxCredit;
 	}
 
-	public Integer getMaxCredit() {
+	public Double getMaxCredit() {
 	    return this.maxCredit == null? 0: this.maxCredit;
 	}
 	public void setInterestOnLoan(Double interestOnLoan) {
@@ -55,26 +59,39 @@ public class AccountType extends BaseEntity{
 	public Double getInterestOnDeposit() {
 	    return this.interestOnDeposit == null? 0 : this.interestOnDeposit;
 	}
-	public void setMinDepositSum(Integer minDepositSum) {
+	public void setMinDepositSum(Double minDepositSum) {
 	    this.minDepositSum = minDepositSum;
 	}
 
-	public Integer getMinDepositSum() {
+	public Double getMinDepositSum() {
 	    return this.minDepositSum == null? 0 : this.minDepositSum;
 	}
-	public void setMaxAssessment(Integer maxAssessment) {
+	public void setMaxAssessment(Double maxAssessment) {
 	    this.maxAssessment = maxAssessment;
 	}
 
-	public Integer getMaxAssessment() {
+	public Double getMaxAssessment() {
 	    return this.maxAssessment == null? 0 : this.maxAssessment;
 	}
-	public void setMaxCancellation(Integer maxCancellation) {
+	public void setMaxCancellation(Double maxCancellation) {
 	    this.maxCancellation = maxCancellation;
 	}
 
-	public Integer getMaxCancellation() {
+	public Double getMaxCancellation() {
 	    return this.maxCancellation == null? 0 : this.maxCancellation;
 	}
 
+	public Set<Account> getAccounts() {
+		if (this.accounts == null) {
+			this.accounts = new HashSet<Account>();
+		}
+		return this.accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		if (this.accounts == null) {
+			this.accounts = new HashSet<Account>();
+		}
+		this.accounts.addAll(accounts);
+	}
 }
