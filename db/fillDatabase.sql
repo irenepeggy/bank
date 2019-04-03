@@ -63,28 +63,22 @@ insert into ContactPerson (idEntityClient, name, number, email)
 insert into ContactPerson (idEntityClient, name, number, email)
 	values (5, 'Toropkov Igor', '+79251096735', 'quicker_toropkov@gmail.com');
     
+insert into Schedule (mon, tue, wed, thu, fri, sat, sun)
+	values ('09:00 - 18:00', '09:00 - 18:00', '09:00 - 18:00', '09:00 - 20:00', '09:00 - 18:00', '13:00 - 18:00', NULL);
+insert into Schedule (mon, tue, wed, thu, fri, sat, sun)
+	values ('10:00 - 19:00', '10:00 - 19:00', '10:00 - 18:00', '10:00 - 20:00', '10:00 - 18:00', '13:00 - 18:00', NULL);
 
-insert into Department (name, address, contacts)
-	values ('Moscow office', '', '+74991457621');
-insert into Department (name, address, contacts)
-	values ('St Petersburg office', '', '+74992347610');    
-insert into Department (name, address, contacts)
-	values ('Kazan office', '', '+74953924512');
-insert into Department (name, address, contacts)
-	values ('Vladivostok office', '', '+74952886457');
-insert into Department (name, address, contacts)
-	values ('Yakutsk office', '', '+74993671254');
+insert into Department (name, address, contacts, idSchedule)
+	values ('Moscow office', '', '+74991457621', 1);
+insert into Department (name, address, contacts, idSchedule)
+	values ('St Petersburg office', '', '+74992347610', 1);    
+insert into Department (name, address, contacts, idSchedule)
+	values ('Kazan office', '', '+74953924512', 2);
+insert into Department (name, address, contacts, idSchedule)
+	values ('Vladivostok office', '', '+74952886457', 2);
+insert into Department (name, address, contacts, idSchedule)
+	values ('Yakutsk office', '', '+74993671254', 2);
     
-insert into Schedule (idDepartment, mon, tue, wed, thu, fri, sat, sun)
-	values (1, '09:00 - 18:00', '09:00 - 18:00', '09:00 - 18:00', '09:00 - 20:00', '09:00 - 18:00', '13:00 - 18:00', NULL);
-insert into Schedule (idDepartment, mon, tue, wed, thu, fri, sat, sun)
-	values (2, '10:00 - 19:00', '10:00 - 19:00', '10:00 - 18:00', '10:00 - 20:00', '10:00 - 18:00', '13:00 - 18:00', NULL);
-insert into Schedule (idDepartment, mon, tue, wed, thu, fri, sat, sun)
-	values (3, '09:00 - 18:00', '09:00 - 18:00', '09:00 - 18:00', '09:00 - 20:00', '09:00 - 18:00', '13:00 - 18:00', NULL);
-insert into Schedule (idDepartment, mon, tue, wed, thu, fri, sat, sun)
-	values (4, '09:00 - 18:00', '09:00 - 18:00', '09:00 - 18:00', '09:00 - 20:00', '09:00 - 18:00', '13:00 - 18:00', NULL);
-insert into Schedule (idDepartment, mon, tue, wed, thu, fri, sat, sun)
-	values (5, '09:00 - 18:00', '09:00 - 18:00', '09:00 - 18:00', '09:00 - 20:00', '09:00 - 18:00', '13:00 - 18:00', NULL);
 
 insert into AccountType (name, maxAssessment, maxCancellation)
 	values ('settlement', 1000000, 500000);

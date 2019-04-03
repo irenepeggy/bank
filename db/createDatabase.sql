@@ -28,7 +28,14 @@ CREATE TABLE IF NOT EXISTS `bankdb`.`Department` (
   `name` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
   `contacts` VARCHAR(45) NULL,
-    PRIMARY KEY (`idDepartment`))
+  `idSchedule` INT,
+    PRIMARY KEY (`idDepartment`),
+      INDEX `fk_Department_Schedule_idx` (`idSchedule` ASC),
+	CONSTRAINT `fk_Department_Schedule`
+    FOREIGN KEY (`idSchedule`)
+    REFERENCES `bankdb`.`Schedule` (`idSchedule`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -38,7 +45,6 @@ DROP TABLE IF EXISTS `bankdb`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `bankdb`.`Schedule` (
   `idSchedule` INT NOT NULL AUTO_INCREMENT,
-  `idDepartment` INT NULL,
   `mon` VARCHAR(45) NULL,
   `tue` VARCHAR(45) NULL,
   `wed` VARCHAR(45) NULL,
@@ -46,13 +52,7 @@ CREATE TABLE IF NOT EXISTS `bankdb`.`Schedule` (
   `fri` VARCHAR(45) NULL,
   `sat` VARCHAR(45) NULL,
   `sun` VARCHAR(45) NULL,
-  PRIMARY KEY (`idSchedule`),
-  INDEX `fk_Schedule_Department_idx` (`idDepartment` ASC),
-  CONSTRAINT `fk_Schedule_Department`
-    FOREIGN KEY (`idDepartment`)
-    REFERENCES `bankdb`.`Department` (`idDepartment`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`idSchedule`))
 ENGINE = InnoDB;
 
 
