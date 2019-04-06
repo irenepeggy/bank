@@ -14,14 +14,32 @@ import util.HibernateUtil;
 
 public class OperationImpl implements OperationDAO {
 
+	public Operation getOperationById(Integer id) throws SQLException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
+		Operation operation = null;
+		try {
+			tx = session.beginTransaction();
+			operation = (Operation) session.get(Operation.class, id);
+			tx.commit();
+		} catch (HibernateException exception) {
+			if (tx != null)
+				tx.rollback();
+			throw exception;
+		} finally {
+			session.close();
+		}
+		return operation;
+	}
 	public void performAssessment(Operation operation) throws SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
+			
 			Account acc = operation.getAccount();
 			Double sum = operation.getSum();
-			if (!acc.getAccountType().getName().equals("settlement")) {
+			if (!acc.getAccountType().getName().contains("settlement")) {
 				throw new HibernateException("Invalid AccountType");
 			}
 			if (sum < 0) {
@@ -31,6 +49,8 @@ public class OperationImpl implements OperationDAO {
 				throw new HibernateException("Sum constaint violation");
 			}
 			acc.setBalance(acc.getBalance() + sum);
+			operation.setTime(new Date());
+			
 			session.update(acc);
 			session.save(operation);
 			tx.commit();
@@ -49,7 +69,7 @@ public class OperationImpl implements OperationDAO {
 			tx = session.beginTransaction();
 			Account acc = operation.getAccount();
 			Double sum = operation.getSum();
-			if (!acc.getAccountType().getName().equals("settlement")) {
+			if (!acc.getAccountType().getName().contains("settlement")) {
 				throw new HibernateException("Invalid AccountType.");
 			}
 			if (sum > 0) {
@@ -63,6 +83,8 @@ public class OperationImpl implements OperationDAO {
 				throw new HibernateException("Sum constaint violation.");
 			}
 			acc.setBalance(acc.getBalance() + sum);
+			operation.setTime(new Date());
+
 			session.update(acc);
 			session.save(operation);
 			tx.commit();
@@ -81,7 +103,7 @@ public class OperationImpl implements OperationDAO {
 		try {
 			tx = session.beginTransaction();
 	
-			if (!account.getAccountType().getName().equals("deposit")) {
+			if (!account.getAccountType().getName().contains("deposit")) {
 				throw new HibernateException("Invalid AccountType");
 			}
 			
@@ -93,6 +115,8 @@ public class OperationImpl implements OperationDAO {
 			
 			account.setBalance(account.getBalance() + op.getSum());
 			session.update(account);
+			op.setTime(new Date());
+
 			session.save(op);
 			tx.commit();
 		} catch (HibernateException exception) {
@@ -110,7 +134,7 @@ public class OperationImpl implements OperationDAO {
 		try {
 			tx = session.beginTransaction();
 	
-			if (!account.getAccountType().getName().equals("credit")) {
+			if (!account.getAccountType().getName().contains("credit")) {
 				throw new HibernateException("Invalid AccountType");
 			}
 			
@@ -121,6 +145,8 @@ public class OperationImpl implements OperationDAO {
 			op.setTime(new Date());
 			
 			account.setCredit(account.getCredit() - op.getSum());
+			op.setTime(new Date());
+
 			session.update(account);
 			session.save(op);
 			tx.commit();
@@ -139,7 +165,7 @@ public class OperationImpl implements OperationDAO {
 		try {
 			tx = session.beginTransaction();
 	
-			if (!account.getAccountType().getName().equals("credit")) {
+			if (!account.getAccountType().getName().contains("credit")) {
 				throw new HibernateException("Invalid AccountType");
 			}
 			if (account.getCredit() <= sum) {
@@ -153,6 +179,8 @@ public class OperationImpl implements OperationDAO {
 			op.setTime(new Date());
 			
 			account.setCredit(account.getCredit() - op.getSum());
+			op.setTime(new Date());
+
 			session.update(account);
 			session.save(op);
 			tx.commit();

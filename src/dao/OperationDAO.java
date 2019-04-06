@@ -7,6 +7,7 @@ import bank.Operation;
 
 public interface OperationDAO {
 	
+	public Operation getOperationById(Integer id) throws SQLException;
 	//sum > 0
 	public void performAssessment(Operation operation) throws SQLException;
 	//sum < 0

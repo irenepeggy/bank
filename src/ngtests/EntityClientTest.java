@@ -1,19 +1,12 @@
 package ngtests;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import bank.Account;
-import bank.AccountType;
+import bank.Client;
 import bank.EntityClient;
 import dao.AccountDAO;
 import dao.AccountTypeDAO;
@@ -34,44 +27,42 @@ public class EntityClientTest {
 		accTypeDAO = Factory.getInstance().getAccountTypeDAO();
 		accDAO = Factory.getInstance().getAccountDAO();
 	}
+	
+	@Test
+	public void testGetEntityClientByClient() throws SQLException {
+		Client newCli = new Client();
+		newCli.setType("entity");
+		cliDAO.addClient(newCli);
+		
+		EntityClient newEntCli = new EntityClient();
+		newEntCli.setClient(newCli);
+		newEntCli.setName("Tanuki");
+
+		ecDAO.addEntityClient(newEntCli);
+		
+		EntityClient checkingEntCli = ecDAO.getEntityClientByClient(newCli);
+		
+		Assert.assertEquals(checkingEntCli.getId(), newEntCli.getId());
+		Assert.assertEquals(checkingEntCli.getName(), newEntCli.getName());
+
+	}
 
 	@Test
 	public void testEdit() throws SQLException {
-		EntityClient ec = ecDAO.getEntityClientById(1);
-		Assert.assertNotEquals(ec.getName(), "Huawei");
-		ec.setName("Huawei");
+		Client newCli = new Client();
+		newCli.setType("entity");
+		cliDAO.addClient(newCli);
+		
+		EntityClient newEntCli = new EntityClient();
+		newEntCli.setClient(newCli);
+		newEntCli.setName("Tanuki");
 
-		ecDAO.editEntityClient(ec);
-		EntityClient editedPc = ecDAO.getEntityClientById(1);
-		Assert.assertEquals (editedPc.getName(), "Huawei");
+		ecDAO.addEntityClient(newEntCli);
+		
+		newEntCli.setKind("Japanise restourant");
+		ecDAO.editEntityClient(newEntCli);
+		
+		Assert.assertEquals(ecDAO.getEntityClientByClient(newCli).getKind(), "Japanise restourant");
+	}
 
-	}
-	@Test
-	public void testFilter() throws SQLException, ParseException {
-		String pattern = "yyyy-mm-dd HH:mm:ss.S";
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		
-		Date openDate1 = sdf.parse("2000-04-03 01:51:08.0");
-		Date openDate2 = sdf.parse("2030-04-03 01:51:08.0");
-		Date closeDate = null;
-		Set<AccountType> accountTypes = new HashSet<AccountType>();
-		accountTypes.add(accTypeDAO.getAccountTypeById(1));
-		accountTypes.add(accTypeDAO.getAccountTypeById(2));
-		
-		Collection<EntityClient> ps = ecDAO.getEntitiesByFilter(openDate1, closeDate, accountTypes);
-		Assert.assertFalse(ps.isEmpty());
-		for (EntityClient p: ps) {
-			for (Account a: p.getClient().getAccounts()) {
-				Assert.assertTrue(a.getOpenDate().compareTo(openDate1) >= 0);
-				System.out.println(a.getAccountType().getId());
-				boolean contains = false;
-				for (AccountType t: accountTypes) {
-					contains |= t.getId() == a.getAccountType().getId();
-				}
-				Assert.assertTrue(contains);
-			}
-		}
-		Assert.assertTrue(ecDAO.getEntitiesByFilter(openDate2, closeDate, accountTypes).isEmpty());
-		
-	}
 }

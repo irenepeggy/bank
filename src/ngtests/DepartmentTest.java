@@ -1,6 +1,7 @@
 package ngtests;
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -8,7 +9,9 @@ import org.testng.annotations.Test;
 
 import bank.Department;
 import bank.Schedule;
+import dao.AccountDAO;
 import dao.DepartmentDAO;
+import dao.OperationDAO;
 import dao.ScheduleDAO;
 import implement.Factory;
 
@@ -16,23 +19,34 @@ public class DepartmentTest {
 
 	public DepartmentDAO depDAO;
 	public ScheduleDAO schDAO;
-	
+	public OperationDAO opDAO;
+	public AccountDAO accDAO;
+
 	@BeforeTest
 	public void beforeTest() {
 		depDAO = Factory.getInstance().getDepartmentDAO();
 		schDAO = Factory.getInstance().getScheduleDAO();
+		accDAO = Factory.getInstance().getAccountDAO();
+		opDAO = Factory.getInstance().getOperationDAO();
+
+	}
+
+	@Test (priority = 1)
+	public void testGetAllDepartments() throws SQLException {
+		Collection<Department> allDeps = depDAO.getAllDepartments();
+		Assert.assertEquals(allDeps.size(), 5);
 	}
 
 	@Test
 	public void testById() throws SQLException {
-		Department dep = depDAO.getDepartmentById(1);
-		assert (dep.getId() == 1);
+		Department dep = depDAO.getDepartmentById(5);
+		assert (dep.getId() == 5);
 	}
 	
 
 
 	@Test
-	public void testCreate() throws SQLException {
+	public void testAdd() throws SQLException {
 
 		Department newDep = new Department();
 		
@@ -75,11 +89,12 @@ public class DepartmentTest {
 		Schedule sched = new Schedule();
 		schDAO.createSchedule(sched);
 		dep.setSchedule(sched);
-		
+
 		depDAO.addDepartment(dep);
 		Integer id = dep.getId();
 		depDAO.deleteDepartment(dep);
 		Assert.assertNull(depDAO.getDepartmentById(id));
+		Assert.assertNull(schDAO.getScheduleById(sched.getId()));
 
 	}
 

@@ -1,5 +1,8 @@
 package bank;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Schedule extends BaseEntity{
 	
 	private String mon;
@@ -10,22 +13,24 @@ public class Schedule extends BaseEntity{
 	private String sat;
 	private String sun;
 	
-//	private Set<Department> departments;
 	
-//	public Set<Department> getDepartments() {
-//		if (this.departments == null) {
-//			this.departments = new HashSet<Department>();
-//		}
-//		return this.departments;
-//	}
-//
-//
-//	public void setDepartments(Set<Department> departments) {
-//		if (this.departments == null) {
-//			this.departments = new HashSet<Department>();
-//		}
-//		this.departments.addAll(departments);
-//	}
+	
+	private Set<Department> departments;
+	
+	public Set<Department> getDepartments() {
+		if (this.departments == null) {
+			this.departments = new HashSet<Department>();
+		}
+		return this.departments;
+	}
+
+
+	public void setDepartments(Set<Department> departments) {
+		if (this.departments == null) {
+			this.departments = new HashSet<Department>();
+		}
+		this.departments.addAll(departments);
+	}
 	public void setMon(String mon) {
 	    this.mon = mon;
 	}

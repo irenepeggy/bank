@@ -20,9 +20,6 @@ public class Client extends BaseEntity {
 	
 
 	public Set<Account> getAccounts() {
-		if (this.accounts == null) {
-			this.accounts = new HashSet<Account>();
-		}
 		return this.accounts;
 	}
 
@@ -31,9 +28,10 @@ public class Client extends BaseEntity {
 		if (this.accounts == null) {
 			this.accounts = new HashSet<Account>();
 		}
-		this.accounts.addAll(accounts);
+		if (accounts != null)
+			this.accounts.addAll(accounts);
+		
 	}
-	
 
 	public Set<PersonClient> getPersonClient() {
 		if (this.personClient == null) {

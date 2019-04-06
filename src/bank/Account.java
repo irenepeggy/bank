@@ -1,13 +1,13 @@
 package bank;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Account extends BaseEntity{
 
 	private Department department;
-	private String accountNum;
+	private Integer accountNum;
 	private Client client;
 	private AccountType accountType;
 	private String status;
@@ -28,11 +28,11 @@ public class Account extends BaseEntity{
 	public Department getDepartment() {
 	    return this.department;
 	}
-	public void setAccountNum(String accountNum) {
+	public void setAccountNum(Integer accountNum) {
 	    this.accountNum = accountNum;
 	}
 
-	public String getAccountNum() {
+	public Integer getAccountNum() {
 	    return this.accountNum;
 	}
 	public void setClient(Client client) {

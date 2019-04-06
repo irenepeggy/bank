@@ -53,7 +53,7 @@ public class EntityClientImpl implements EntityClientDAO {
 
 
 	
-	public EntityClient getEntityClientByClient(Client client) throws SQLException {
+	public EntityClient getEntityClientByClient(Client c) throws SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
 		EntityClient entityClient = new EntityClient();
@@ -62,7 +62,7 @@ public class EntityClientImpl implements EntityClientDAO {
 
 			entityClient = (EntityClient) session.createQuery("select ec " 
 					+ "from EntityClient ec " 
-					+ "where ec.client = client")
+					+ "where ec.client = :c").setParameter("c", c)
 					.list().get(0);
 
 			tx.commit();

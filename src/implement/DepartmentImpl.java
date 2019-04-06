@@ -3,13 +3,18 @@ package implement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import bank.Account;
 import bank.Department;
+import bank.Operation;
+import bank.Schedule;
 import dao.DepartmentDAO;
 import util.HibernateUtil;
 
@@ -57,8 +62,10 @@ public class DepartmentImpl implements DepartmentDAO {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			//session.delete(department.getSchedule());
+			Schedule sch = department.getSchedule();
 			session.delete(department);
+			session.delete(sch);
+			
 			tx.commit();
 
 		} catch (HibernateException exception) {
@@ -89,7 +96,7 @@ public class DepartmentImpl implements DepartmentDAO {
 		return department;
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public Collection<Department> getAllDepartments() throws SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -97,7 +104,7 @@ public class DepartmentImpl implements DepartmentDAO {
 		List<Department> departments = new ArrayList<Department>();
 		try {
 			tx = session.beginTransaction();
-			departments = session.createQuery("SELECT d from Department d").list();
+			departments = session.createQuery("SELECT d from Department d", Department.class).list();
 			tx.commit();
 		} catch (Exception exception) {
 			if (tx != null)

@@ -69,7 +69,7 @@ public class PersonClientImpl implements PersonClientDAO {
 		return personClient;
 	}
 
-	public PersonClient getPersonClientByClient(Client client) throws SQLException {
+	public PersonClient getPersonClientByClient(Client c) throws SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
 		PersonClient personClient = new PersonClient();
@@ -77,7 +77,11 @@ public class PersonClientImpl implements PersonClientDAO {
 			tx = session.beginTransaction();
 
 			personClient = (PersonClient) session
-					.createQuery("select pc " + "from PersonClient pc " + "where pc.client = client").list().get(0);
+					.createQuery("select pc " 
+							+ "from PersonClient pc " 
+							+ "where pc.client = :c")
+					.setParameter("c", c)
+					.list().get(0);
 
 			tx.commit();
 		} catch (Exception exception) {
@@ -90,39 +94,5 @@ public class PersonClientImpl implements PersonClientDAO {
 		return personClient;
 	}
 
-	public Collection<PersonClient> getPersonsByFilter(Date openDate, Date closeDate, Set<AccountType> accountTypes)
-			throws SQLException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = null;
-		List<PersonClient> personClients = new ArrayList<PersonClient>();
-		Integer emptyFlag = 1;
-		String queryClause = new String();
-		queryClause += "(:openDate is null or acc.openDate >= :openDate) ";
-		queryClause += (!queryClause.isEmpty() ? "and " : " ") + "(:closeDate is null or (acc.closeDate is not null and acc.closeDate <= :closeDate)) ";
-		if (accountTypes.isEmpty()) {
-			emptyFlag = 0;
-		}
-		queryClause += (!queryClause.isEmpty() ? "and " : " ")
-				+ " (:emptyFlag = 0 or acc.accountType in :accountTypes) ";
-		try {
-			tx = session.beginTransaction();
-
-			personClients = session
-					.createQuery("select pc from PersonClient pc " + "inner join pc.client as c "
-							+ "inner join c.accounts as acc " + "where " + queryClause, PersonClient.class)
-					.setParameter("openDate", openDate).setParameter("accountTypes", accountTypes)
-					.setParameter("closeDate", closeDate)
-					.setParameter("emptyFlag", emptyFlag)
-					.list();
-			tx.commit();
-		} catch (HibernateException exception) {
-			if (tx != null)
-				tx.rollback();
-			throw exception;
-		} finally {
-			session.close();
-		}
-		return personClients;
-	}
-
+	
 }

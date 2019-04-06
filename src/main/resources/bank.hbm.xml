@@ -131,6 +131,14 @@
 		<property name="contacts" column="contacts" />
 		<many-to-one name="schedule" column="idSchedule"
 			class="bank.Schedule" />
+		<set name="operations" inverse="true" cascade="delete">
+			<key column="idDepartment" />
+			<one-to-many class="bank.Operation" />
+		</set>
+		<set name="accounts" inverse="true" cascade="delete">
+			<key column="idDepartment" />
+			<one-to-many class="bank.Account" />
+		</set>
 	</class>
 
 	<class name="bank.Schedule" table="Schedule">
@@ -144,9 +152,9 @@
 		<property name="fri" column="fri" />
 		<property name="sat" column="sat" />
 		<property name="sun" column="sun" />
-		<!-- <set name="departments" inverse="true" cascade="delete"> -->
-		<!-- <key column="idSchedule"/> -->
-		<!-- <one-to-many class="bank.Department"/> -->
-		<!-- </set> -->
+		<set name="departments" inverse="true" cascade="delete">
+		<key column="idSchedule"/>
+		<one-to-many class="bank.Department"/>
+		</set>
 	</class>
 </hibernate-mapping>

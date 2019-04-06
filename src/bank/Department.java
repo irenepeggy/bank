@@ -9,6 +9,7 @@ public class Department extends BaseEntity{
 	private String contacts;
 	private Set<Account> accounts;
 	private Schedule schedule;
+	private Set<Operation> operations;
 
 	
 	public void setName(String name) {
@@ -56,6 +57,21 @@ public class Department extends BaseEntity{
 	
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
+	}
+	
+	public Set<Operation> getOperations() {
+		if (this.operations == null) {
+			this.operations = new HashSet<Operation>();
+		}
+		return this.operations;
+	}
+
+
+	public void setOperations(Set<Operation> operations) {
+		if (this.operations == null) {
+			this.operations = new HashSet<Operation>();
+		}
+		this.operations.addAll(operations);
 	}
 
 }

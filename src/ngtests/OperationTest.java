@@ -11,6 +11,9 @@ import org.testng.annotations.Test;
 import bank.Account;
 import bank.Operation;
 import dao.AccountDAO;
+import dao.AccountTypeDAO;
+import dao.ClientDAO;
+import dao.DepartmentDAO;
 import dao.OperationDAO;
 import implement.Factory;
 
@@ -18,16 +21,31 @@ public class OperationTest {
 
 	public OperationDAO opDAO;
 	public AccountDAO accDAO;
+	public ClientDAO cliDAO;
+	public AccountTypeDAO accTypeDAO;
+	public DepartmentDAO depDAO;
 	
 	@BeforeTest
 	public void beforeTest() {
 		accDAO = Factory.getInstance().getAccountDAO();
 		opDAO = Factory.getInstance().getOperationDAO();
+		cliDAO = Factory.getInstance().getClientDAO();
+		depDAO = Factory.getInstance().getDepartmentDAO();
+		accTypeDAO = Factory.getInstance().getAccountTypeDAO();
 	}
 
 	@Test (expectedExceptions = HibernateException.class, expectedExceptionsMessageRegExp = "Sum constaint violation")
 	public void testPerformAssessment() throws SQLException{
-		Account acc = accDAO.getAccountById(3);
+		Integer id1 = 1;
+		Account acc = new Account();
+
+		// open settlement account
+		acc.setClient(cliDAO.getClientById(id1));
+		acc.setAccountType(accTypeDAO.getAccountTypeById(1));
+		acc.setDepartment(depDAO.getDepartmentById(1));
+		Double sumSettlement = 10000.0;
+		accDAO.openAccount(acc, sumSettlement, null);
+
 		Double oldBalance = acc.getBalance();
 		Assert.assertEquals(acc.getAccountType().getName(),"settlement");
 		Operation op = new Operation();
@@ -36,7 +54,7 @@ public class OperationTest {
 		op.setAccount(acc);
 		op.setDepartment(acc.getDepartment());
 		op.setSum(goodSum);
-		op.setTime(new Date());
+		
 		
 		opDAO.performAssessment(op);
 		Assert.assertEquals(acc.getBalance(), oldBalance + goodSum);
@@ -51,7 +69,16 @@ public class OperationTest {
 	
 	@Test (expectedExceptions = HibernateException.class, expectedExceptionsMessageRegExp = "Sum constaint violation.")
 	public void testPerformCancellation() throws SQLException{
-		Account acc = accDAO.getAccountById(3);
+		Integer id1 = 1;
+		Account acc = new Account();
+
+		// open settlement account
+		acc.setClient(cliDAO.getClientById(id1));
+		acc.setAccountType(accTypeDAO.getAccountTypeById(1));
+		acc.setDepartment(depDAO.getDepartmentById(1));
+		Double sumSettlement = 1000000.0;
+		accDAO.openAccount(acc, sumSettlement, null);
+
 		Double oldBalance = acc.getBalance();
 		Assert.assertEquals(acc.getAccountType().getName(), "settlement");
 		Operation op = new Operation();
@@ -75,7 +102,17 @@ public class OperationTest {
 	
 	@Test 
 	public void testInterectOnDeposit() throws SQLException{
-		Account acc = accDAO.getAccountById(2);
+		Integer id1 = 1;
+		Account acc = new Account();
+
+		// open deposit account
+		acc.setClient(cliDAO.getClientById(id1));
+		acc.setAccountType(accTypeDAO.getAccountTypeById(3));
+		acc.setDepartment(depDAO.getDepartmentById(1));
+		Double sumDeposit = 100000.0;
+		Integer period = 12;
+		accDAO.openAccount(acc, sumDeposit, period);
+
 		Double oldBalance = acc.getBalance();
 		Assert.assertEquals(acc.getAccountType().getName(), "deposit");
 	
@@ -86,7 +123,16 @@ public class OperationTest {
 
 	@Test 
 	public void testInterectOnLoan() throws SQLException{
-		Account acc = accDAO.getAccountById(1);
+		Integer id1 = 1;
+		Account acc = new Account();
+
+		// open credit account
+		acc.setClient(cliDAO.getClientById(id1));
+		acc.setAccountType(accTypeDAO.getAccountTypeById(2));
+		acc.setDepartment(depDAO.getDepartmentById(1));
+		Double sumCredit = 10000.0;
+		accDAO.openAccount(acc, sumCredit, null);
+
 		Double oldCredit = acc.getCredit();
 		Assert.assertEquals(acc.getAccountType().getName(), "credit");
 	
@@ -97,18 +143,23 @@ public class OperationTest {
 	
 	@Test 
 	public void testPayForCredit() throws SQLException{
-		Account acc = accDAO.getAccountById(1);
+		Integer id1 = 1;
+		Account acc = new Account();
+
+		// open credit account
+		acc.setClient(cliDAO.getClientById(id1));
+		acc.setAccountType(accTypeDAO.getAccountTypeById(2));
+		acc.setDepartment(depDAO.getDepartmentById(1));
+		Double sumCredit = 10000.0;
+		accDAO.openAccount(acc, sumCredit, null);
+
 		Double oldCredit = acc.getCredit();
 		Assert.assertEquals(acc.getAccountType().getName(), "credit");
 		Double sum = 10000.0;
 		
-		opDAO.payForCredit(acc, sum);
-		System.out.println(accDAO.getAccountById(1).getCredit().toString() + " " + new Double(oldCredit - sum).toString());
-		Assert.assertEquals(accDAO.getAccountById(1).getCredit(), oldCredit - sum);
-		
-		acc.setCredit(sum);
 		Assert.assertEquals(acc.getStatus(), "open");
 		opDAO.payForCredit(acc, sum);
+		Assert.assertEquals(accDAO.getAccountById(acc.getId()).getCredit(), oldCredit - sum);
 		Assert.assertEquals(acc.getStatus(), "closed");
 	
 	}

@@ -10,7 +10,7 @@
          <property name="hibernate.connection.password">s7wDI;sGAie0</property>  
          <property name="hibernate.connection.username">root</property>  
 
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         <property name="connection.pool_size">1</property>
         <property name="current_session_context_class">thread</property> 
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
